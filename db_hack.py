@@ -46,7 +46,7 @@ def get_schoolkid(student_name):
 
 def fix_marks(student_name):
     schoolkid = get_schoolkid(student_name)
-    if schoolkid is None:
+    if not schoolkid:
         return
 
     Mark.objects.filter(
@@ -58,7 +58,7 @@ def fix_marks(student_name):
 
 def remove_chastisements(student_name):
     schoolkid = get_schoolkid(student_name)
-    if schoolkid is None:
+    if not schoolkid:
         return
 
     schoolkid_chastisements = Chastisement.objects.filter(schoolkid=schoolkid)
@@ -68,7 +68,7 @@ def remove_chastisements(student_name):
 
 def create_commendation(student_name, subject_name):
     schoolkid = get_schoolkid(student_name)
-    if schoolkid is None:
+    if not schoolkid:
         return
     try:
         subject = Subject.objects.get(
@@ -89,7 +89,7 @@ def create_commendation(student_name, subject_name):
         year_of_study=schoolkid.year_of_study,
         subject=subject
     ).order_by("-date").last()
-    if last_lesson is None:
+    if not last_lesson:
         print(f"У ученика {schoolkid.full_name} нет уроков "
               f"по предмету {subject_name}.")
 
